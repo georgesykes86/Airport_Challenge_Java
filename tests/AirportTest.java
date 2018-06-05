@@ -1,3 +1,4 @@
+import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Verifications;
 import org.junit.jupiter.api.*;
@@ -52,5 +53,20 @@ class AirportTest {
         new Verifications() {{ plane.takeOff(); times = 1; }};
     }
 
+    @Test
+    public void removeesPlaneFromPlanesOnRelease() {
+        airport.releasePlane(plane);
+        assertFalse(airport.planes.contains(plane));
+    }
+
+    @Test
+    public void doesNotReleasePlaneWhenAlreadyFlying() {
+        new Expectations() {{
+            plane.takeOff(); result = new Error("Plane already flying");
+        }};
+
+        Throwable error = assertThrows(Error.class, () -> { airport.releasePlane(plane); });
+        assertEquals("Plane already flying", error.getMessage());
+    }
 
 }

@@ -23,5 +23,6 @@ public class Airport {
 
     public void releasePlane(Plane plane) {
         plane.takeOff();
+        this.planes.remove(plane);
     }
 }
