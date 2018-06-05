@@ -16,5 +16,12 @@ public class Airport {
     }
 
 
+    public void storePlane(Plane plane) {
+        plane.land();
+        this.planes.add(plane);
+    }
 
+    public void releasePlane(Plane plane) {
+        plane.takeOff();
+    }
 }
